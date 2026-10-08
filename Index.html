@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRF Operations Portal | Enterprise Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-body: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            
+            /* Professional Accent Colors (Based on Recity Logo blues) */
+            --primary-color: #1e40af;
+            --ops-color: #0284c7;
+            --logistics-color: #0369a1;
+            --fuel-color: #075985;
+            --maint-color: #0c4a6e;
+
+            --radius-lg: 12px;
+            --radius-md: 8px;
+            --transition: all 0.2s ease-in-out;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* --- Header --- */
+        .header-bar {
+            text-align: center;
+            margin-bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .brand-logo {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 8px;
+            mix-blend-mode: multiply;
+        }
+
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            letter-spacing: -0.01em;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 8px auto 0;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+            max-width: 480px;
+            margin-top: 24px;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 14px 20px 14px 44px;
+            border-radius: var(--radius-lg);
+            color: var(--text-main);
+            font-size: 0.95rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* --- Sections --- */
+        .category-section {
+            margin-bottom: 48px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--card-border);
+        }
+
+        .category-header h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .category-badge {
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--primary-color);
+        }
+
+        /* --- Grid & Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .form-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 160px;
+            transition: var(--transition);
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .form-card:hover {
+            transform: translateY(-2px);
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .card-icon {
+            font-size: 1.25rem;
+        }
+
+        .card-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: #f1f5f9;
+            color: var(--text-muted);
+            border: 1px solid #e2e8f0;
+        }
+
+        .form-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            border-top: 1px solid var(--card-border);
+            padding-top: 16px;
+            margin-top: auto;
+        }
+
+        .card-footer i {
+            transition: var(--transition);
+        }
+
+        .form-card:hover .card-footer i {
+            transform: translateX(4px);
+        }
+
+        /* Theming for Categories (Professional subtle lines instead of glowing borders) */
+        .cat-ops .category-badge, .cat-ops .card-icon { color: var(--ops-color); }
+        .cat-ops .form-card:hover { border-color: var(--ops-color); }
+        .cat-ops .card-footer { color: var(--ops-color); }
+
+        .cat-logistics .category-badge, .cat-logistics .card-icon { color: var(--logistics-color); }
+        .cat-logistics .form-card:hover { border-color: var(--logistics-color); }
+        .cat-logistics .card-footer { color: var(--logistics-color); }
+
+        .cat-fuel .category-badge, .cat-fuel .card-icon { color: var(--fuel-color); }
+        .cat-fuel .form-card:hover { border-color: var(--fuel-color); }
+        .cat-fuel .card-footer { color: var(--fuel-color); }
+
+        .cat-maint .category-badge, .cat-maint .card-icon { color: var(--maint-color); }
+        .cat-maint .form-card:hover { border-color: var(--maint-color); }
+        .cat-maint .card-footer { color: var(--maint-color); }
+
+        @media (max-width: 768px) {
+            .header-title h1 { font-size: 1.75rem; }
+            .grid { grid-template-columns: 1fr; }
+            body { padding: 24px 16px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="main-content">
+
+        <header class="header-bar">
+            <img src="image.png" alt="Recity Logo" class="brand-logo">
+            <div class="header-title">
+                <h1>Recity MRF Portal</h1>
+                <p>Select a form below to log operational data instantly.</p>
+            </div>
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Search forms..." onkeyup="filterForms()">
+            </div>
+        </header>
+
+        <!-- 1. Operations & Production -->
+        <section id="ops" class="category-section cat-ops">
+            <div class="category-header">
+                <div class="category-badge"><i class="fa-solid fa-industry"></i></div>
+                <h2>Operations & Production</h2>
+            </div>
+            <div class="grid">
+                <a href="https://drive.google.com/open?id=1SFygPB40HN2FEpaCnq377iYtZoyRyb80xopRwzjhiLA" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-chart-line card-icon"></i>
+                        <span class="card-tag">Daily</span>
+                    </div>
+                    <div class="form-title">Daily FOC Production Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=17pF7lPWU0JpNcJPzXJA6tDXxgqqvgJR5t4nBmupYuqw" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-dumpster card-icon"></i>
+                        <span class="card-tag">Inward</span>
+                    </div>
+                    <div class="form-title">Inward Waste Characterization</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1RfqT1yjOqqmQta15Yd9KHkUJNBKiCwIEvZc2dnVtAOU" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-gears card-icon"></i>
+                        <span class="card-tag">Plant</span>
+                    </div>
+                    <div class="form-title">100mm Plant Production Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1LxKk6OjOFeWyiXD73dRfWcN7N4jTvGo2b4L_8JclQz4" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-seedling card-icon"></i>
+                        <span class="card-tag">Compost</span>
+                    </div>
+                    <div class="form-title">Compost Plant Production Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1eoPGNPUSULvlRNMR0dFDsdZgBy-WO3cEjgZgk3K0zRA" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-box-archive card-icon"></i>
+                        <span class="card-tag">Baling</span>
+                    </div>
+                    <div class="form-title">Daily Baling Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1LufnLaq1xrn9DjLGGaWFJP7ZJHu5-1_dl4iHwTnBDpw" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-bottle-water card-icon"></i>
+                        <span class="card-tag">PET</span>
+                    </div>
+                    <div class="form-title">PET Sorting Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1aLO6wf1ct6aogjITI8a9wQt94PeSoz_CYdVb6fL64BU" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-bolt card-icon"></i>
+                        <span class="card-tag">Realtime</span>
+                    </div>
+                    <div class="form-title">Realtime Sorting Material Form</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=15tdqnlMRtxsRHpRxFqt5Do2ArA289HkH5SFfQY7uv4w" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-users-viewfinder card-icon"></i>
+                        <span class="card-tag">Sorting</span>
+                    </div>
+                    <div class="form-title">Daily Sorting Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1E5QTBdxG8811I8J6Luy0q01Q8NbDQxka5sUdHYnOaZU" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-bag-shopping card-icon"></i>
+                        <span class="card-tag">FG Goods</span>
+                    </div>
+                    <div class="form-title">Daily FG Bags Form 2025-26</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. Logistics & Dispatch -->
+        <section id="logistics" class="category-section cat-logistics">
+            <div class="category-header">
+                <div class="category-badge"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                <h2>Logistics & Dispatch</h2>
+            </div>
+            <div class="grid">
+                <a href="https://drive.google.com/open?id=1AR24IK6m5AM9tC0gE8YUZiHE8eQO3scHs_sCe5a1spU" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-weight-scale card-icon"></i>
+                        <span class="card-tag">Weighbridge</span>
+                    </div>
+                    <div class="form-title">Daily Weighbridge Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1uSnEzLW7CZ4ym7dRW8N6Y7KrIhZCZxOfha5a9h9hXSk" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-truck-fast card-icon"></i>
+                        <span class="card-tag">Dispatch</span>
+                    </div>
+                    <div class="form-title">Mathura MRF Material Dispatch Form</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1vtzjm_FiMpsHAN2L2S5ax5ss5NapojzoQxH7IqmS_KQ" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-coins card-icon"></i>
+                        <span class="card-tag">Sales</span>
+                    </div>
+                    <div class="form-title">Compost Plant Sales</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1kc8c52yQEsbBYDf6k7QUUlVGikCvB-Cdb_sbNxFnSQQ" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-trash-can card-icon"></i>
+                        <span class="card-tag">Disposal</span>
+                    </div>
+                    <div class="form-title">Rejection Disposal Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1NeMpDQcjWM8aT39haWEnvceCoCGpeZEHg2opfmXrbfM" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-triangle-exclamation card-icon"></i>
+                        <span class="card-tag">Breakdown</span>
+                    </div>
+                    <div class="form-title">Rental Vehicle Breakdown Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1L_9RRYUoBp44foRDvJigxu7thQ5We30QANVUAbNkuEc" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-clipboard-list card-icon"></i>
+                        <span class="card-tag">Tracker</span>
+                    </div>
+                    <div class="form-title">Weighment Tracker</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 3. Fuel & Inventory Tracking -->
+        <section id="fuel" class="category-section cat-fuel">
+            <div class="category-header">
+                <div class="category-badge"><i class="fa-solid fa-gas-pump"></i></div>
+                <h2>Fuel & Inventory Tracking</h2>
+            </div>
+            <div class="grid">
+                <a href="https://drive.google.com/open?id=1nkCbWuHwcD00F4_GuZYoHFWFWvgJSGUi5u45LmtIbK0" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-oil-can card-icon"></i>
+                        <span class="card-tag">MRF Diesel</span>
+                    </div>
+                    <div class="form-title">MRF Diesel Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1TjmK3Ba5ipcyNPoZcGNDw8UZD7jEgKVBMRsfHPtcJRY" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-gas-pump card-icon"></i>
+                        <span class="card-tag">Common Diesel</span>
+                    </div>
+                    <div class="form-title">Common Diesel Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=16QU2JiOUPtXXTEg8vHHC55_-gjZuxavoqoujVT1ZgI8" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-truck-monster card-icon"></i>
+                        <span class="card-tag">100mm Diesel</span>
+                    </div>
+                    <div class="form-title">100mm Plant Diesel Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1lxbTO9SFtGv2M1jOd_VG9fqpECRRlEQ7_9vPH7r8N4k" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-tractor card-icon"></i>
+                        <span class="card-tag">Compost Diesel</span>
+                    </div>
+                    <div class="form-title">Compost Plant Diesel Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1hYGVo3BhBUIDF4t7djcGfnB1RhahLiNVmgSkT1Oq2RY" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-mountain card-icon"></i>
+                        <span class="card-tag">Dumpsite Diesel</span>
+                    </div>
+                    <div class="form-title">Dumpsite Diesel Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1PdlMUBY3p_uPjN40VdL7Tt2aa_CFimmpxRPMSbtOov4" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-cart-shopping card-icon"></i>
+                        <span class="card-tag">Purchase</span>
+                    </div>
+                    <div class="form-title">Material Purchase Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1nexcCM7QjsFFAHcmbz4PC8cWqxLbK5Uj26VO2lWxFLI" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-shield-halved card-icon"></i>
+                        <span class="card-tag">EHS Inward</span>
+                    </div>
+                    <div class="form-title">EHS Stock Inwards Record</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+                <a href="https://drive.google.com/open?id=1wKJU9k5dQTJIdTxFiPh0mopssvHm7btruQGoRAYdVv0" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-box-open card-icon"></i>
+                        <span class="card-tag">EHS Issue</span>
+                    </div>
+                    <div class="form-title">EHS Stock Issuance Form</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+            </div>
+        </section>
+
+        <!-- 4. Maintenance & Equipment -->
+        <section id="maintenance" class="category-section cat-maint">
+            <div class="category-header">
+                <div class="category-badge"><i class="fa-solid fa-gears"></i></div>
+                <h2>Maintenance & Equipment</h2>
+            </div>
+            <div class="grid">
+                <a href="https://drive.google.com/open?id=15uqeQQk1VgSORx9sZxSuEO-SqSKX3gxYv4030shzy6s" target="_blank"
+                    class="form-card">
+                    <div class="card-top">
+                        <i class="fa-solid fa-screwdriver-wrench card-icon"></i>
+                        <span class="card-tag">Inspection</span>
+                    </div>
+                    <div class="form-title">Machine Observation Form</div>
+                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Live Search Filter Functionality
+        function filterForms() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const cards = document.querySelectorAll('.form-card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.form-title').innerText.toLowerCase();
+                const tag = card.querySelector('.card-tag').innerText.toLowerCase();
+
+                if (title.includes(query) || tag.includes(query)) {
+                    card.style.display = "flex";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
