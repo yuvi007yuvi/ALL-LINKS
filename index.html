@@ -537,16 +537,32 @@
         // Live Search Filter Functionality
         function filterForms() {
             const query = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.form-card');
+            const sections = document.querySelectorAll('.category-section');
 
-            cards.forEach(card => {
-                const title = card.querySelector('.form-title').innerText.toLowerCase();
-                const tag = card.querySelector('.card-tag').innerText.toLowerCase();
+            sections.forEach(section => {
+                const cards = section.querySelectorAll('.form-card');
+                const header = section.querySelector('.category-header');
+                let hasVisible = false;
 
-                if (title.includes(query) || tag.includes(query)) {
-                    card.style.display = "flex";
+                cards.forEach(card => {
+                    const title = card.querySelector('.form-title').innerText.toLowerCase();
+                    const tag = card.querySelector('.card-tag').innerText.toLowerCase();
+
+                    if (title.includes(query) || tag.includes(query)) {
+                        card.style.display = "flex";
+                        hasVisible = true;
+                    } else {
+                        card.style.display = "none";
+                    }
+                });
+
+                // Hide headers when searching, and hide the entire section if no matches found
+                if (query.length > 0) {
+                    header.style.display = "none";
+                    section.style.display = hasVisible ? "block" : "none";
                 } else {
-                    card.style.display = "none";
+                    header.style.display = "flex";
+                    section.style.display = "block";
                 }
             });
         }
