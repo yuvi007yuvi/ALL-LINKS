@@ -39,7 +39,7 @@
             background-color: var(--bg-body);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 8px 20px 40px;
+            padding: 10px 16px 28px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -54,23 +54,23 @@
         /* --- Header --- */
         .header-bar {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
         }
 
         .brand-logo {
-            max-width: 180px;
+            max-width: 140px;
             height: auto;
-            margin-top: -20px;
-            margin-bottom: 0px;
+            margin-top: -10px;
+            margin-bottom: -2px;
             mix-blend-mode: multiply;
         }
 
         .header-title h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--text-main);
             letter-spacing: -0.01em;
@@ -78,27 +78,27 @@
 
         .header-title p {
             color: var(--text-muted);
-            font-size: 1rem;
-            max-width: 600px;
-            margin: 8px auto 0;
+            font-size: 0.88rem;
+            max-width: 550px;
+            margin: 2px auto 0;
         }
 
         .search-box {
             position: relative;
             width: 100%;
-            max-width: 480px;
-            margin-top: 24px;
+            max-width: 420px;
+            margin-top: 14px;
         }
 
         .search-box input {
             width: 100%;
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 14px 20px 14px 44px;
-            border-radius: var(--radius-lg);
+            padding: 9px 16px 9px 38px;
+            border-radius: var(--radius-md);
             color: var(--text-main);
-            font-size: 0.95rem;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            font-size: 0.88rem;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
             transition: var(--transition);
         }
 
@@ -109,57 +109,316 @@
         .search-box input:focus {
             outline: none;
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+            box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.12);
         }
 
         .search-box i {
             position: absolute;
-            left: 16px;
+            left: 13px;
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
-        .version-badge {
+        .top-nav {
             position: absolute;
             top: 20px;
             right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 50;
+        }
+
+        .version-badge {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+            padding: 3px 9px;
+            border-radius: 14px;
+            font-size: 0.7rem;
             font-weight: 600;
             color: var(--text-muted);
             box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
+        }
+
+        .admin-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            padding: 4px 10px;
+            border-radius: 14px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: #334155;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        .admin-btn:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+            color: #0f172a;
+        }
+
+        body.admin-active .admin-btn {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            color: #dc2626;
+        }
+
+        body.admin-active .admin-btn:hover {
+            background: #fee2e2;
+        }
+
+        .admin-status-indicator {
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #94a3b8;
+        }
+
+        body.admin-active .admin-status-indicator {
+            background: #16a34a;
+            box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
+        }
+
+        /* Admin banner */
+        .admin-alert-banner {
+            display: none;
+            width: 100%;
+            max-width: 1100px;
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius-md);
+            padding: 8px 14px;
+            margin-bottom: 20px;
+            color: #1e40af;
+            font-size: 0.8rem;
+            font-weight: 500;
+            align-items: center;
+            justify-content: space-between;
+            animation: fadeIn 0.25s ease-out;
+        }
+
+        body.admin-active .admin-alert-banner {
+            display: flex;
+        }
+
+        .admin-alert-banner .left-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-response-btn {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            background: #f1f5f9;
+            color: #0f172a;
+            border: 1px solid #cbd5e1;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .admin-response-btn:hover {
+            background: #0f172a;
+            color: #ffffff;
+            border-color: #0f172a;
+        }
+
+        body.admin-active .admin-response-btn {
+            display: inline-flex;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.55);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            padding: 16px;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .modal-card {
+            background: #ffffff;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 24px;
+            animation: modalPop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.95); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .modal-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .modal-close-btn:hover {
+            color: var(--text-main);
+            background: #f1f5f9;
+        }
+
+        .modal-body p {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .password-field {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .password-field input {
+            width: 100%;
+            padding: 11px 40px 11px 14px;
+            border: 1px solid var(--card-border);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .password-field input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.15);
+        }
+
+        .toggle-pwd-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.82rem;
+            margin-top: -8px;
+            margin-bottom: 14px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-secondary {
+            padding: 9px 16px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--card-border);
+            background: #f8fafc;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-secondary:hover {
+            background: #f1f5f9;
+        }
+
+        .btn-primary {
+            padding: 9px 18px;
+            border-radius: var(--radius-md);
+            border: none;
+            background: var(--primary-color);
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
         }
 
         /* --- Sections --- */
         .category-section {
-            margin-bottom: 48px;
+            margin-bottom: 24px;
         }
 
         .category-header {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--card-border);
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1.5px solid var(--card-border);
         }
 
         .category-header h2 {
-            font-size: 1.25rem;
+            font-size: 1.05rem;
             font-weight: 600;
             color: var(--text-main);
         }
 
         .category-badge {
-            font-size: 1.2rem;
-            width: 40px;
-            height: 40px;
+            font-size: 0.95rem;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -172,60 +431,57 @@
         /* --- Grid & Cards --- */
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
         }
 
         .form-card {
             background: var(--card-bg);
             border: 1px solid var(--card-border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
+            border-radius: var(--radius-md);
+            padding: 8px 12px;
             text-decoration: none;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            min-height: 160px;
+            min-height: 68px;
             transition: var(--transition);
             position: relative;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
         }
 
         .form-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             border-color: #cbd5e1;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.05);
         }
 
         .card-top {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-        }
-
-        .card-icon {
-            font-size: 1.25rem;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 2px;
         }
 
         .card-tag {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 4px 10px;
-            border-radius: 4px;
+            letter-spacing: 0.3px;
+            padding: 1px 5px;
+            border-radius: 3px;
             background: #f1f5f9;
             color: var(--text-muted);
             border: 1px solid #e2e8f0;
+            line-height: 1.2;
         }
 
         .form-title {
-            font-size: 1.05rem;
+            font-size: 0.84rem;
             font-weight: 600;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            line-height: 1.3;
+            margin-bottom: 4px;
             color: var(--text-main);
         }
 
@@ -233,49 +489,166 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            font-size: 0.85rem;
+            gap: 6px;
+            font-size: 0.74rem;
             font-weight: 500;
             color: var(--primary-color);
             border-top: 1px solid var(--card-border);
-            padding-top: 16px;
+            padding-top: 5px;
             margin-top: auto;
+        }
+
+        .card-footer .submit-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.74rem;
         }
 
         .card-footer i {
             transition: var(--transition);
         }
 
-        .form-card:hover .card-footer i {
-            transform: translateX(4px);
+        .form-card:hover .submit-label i {
+            transform: translateX(3px);
         }
 
         /* Theming for Categories (Professional subtle lines instead of glowing borders) */
-        .cat-ops .category-badge, .cat-ops .card-icon { color: var(--ops-color); }
+        .cat-ops .category-badge { color: var(--ops-color); }
         .cat-ops .form-card:hover { border-color: var(--ops-color); }
         .cat-ops .card-footer { color: var(--ops-color); }
 
-        .cat-logistics .category-badge, .cat-logistics .card-icon { color: var(--logistics-color); }
+        .cat-logistics .category-badge { color: var(--logistics-color); }
         .cat-logistics .form-card:hover { border-color: var(--logistics-color); }
         .cat-logistics .card-footer { color: var(--logistics-color); }
 
-        .cat-fuel .category-badge, .cat-fuel .card-icon { color: var(--fuel-color); }
+        .cat-fuel .category-badge { color: var(--fuel-color); }
         .cat-fuel .form-card:hover { border-color: var(--fuel-color); }
         .cat-fuel .card-footer { color: var(--fuel-color); }
 
-        .cat-maint .category-badge, .cat-maint .card-icon { color: var(--maint-color); }
+        .cat-maint .category-badge { color: var(--maint-color); }
         .cat-maint .form-card:hover { border-color: var(--maint-color); }
         .cat-maint .card-footer { color: var(--maint-color); }
 
+        /* --- Responsive Design --- */
+        @media (max-width: 900px) {
+            .grid {
+                grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                gap: 16px;
+            }
+        }
+
         @media (max-width: 768px) {
-            .header-title h1 { font-size: 1.75rem; }
-            .grid { grid-template-columns: 1fr; }
-            body { padding: 24px 16px; }
+            body {
+                padding: 12px 14px 40px;
+            }
+
+            .top-nav {
+                position: static;
+                width: 100%;
+                max-width: 1100px;
+                justify-content: space-between;
+                margin-bottom: 16px;
+            }
+
+            .header-bar {
+                margin-top: 4px;
+                margin-bottom: 20px;
+            }
+
+            .brand-logo {
+                max-width: 150px;
+                margin-top: 0;
+            }
+
+            .header-title h1 {
+                font-size: 1.6rem;
+            }
+
+            .header-title p {
+                font-size: 0.9rem;
+            }
+
+            .search-box {
+                max-width: 100%;
+                margin-top: 18px;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .form-card {
+                padding: 8px 12px;
+                min-height: 64px;
+            }
+
+            .form-title {
+                font-size: 0.84rem;
+                margin-bottom: 4px;
+            }
+
+            .admin-alert-banner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 8px 10px;
+            }
+
+            .card-footer {
+                padding-top: 5px;
+                flex-wrap: wrap;
+            }
+
+            .admin-response-btn {
+                padding: 3px 7px;
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .header-title h1 {
+                font-size: 1.4rem;
+            }
+
+            .version-badge {
+                padding: 2px 7px;
+                font-size: 0.68rem;
+            }
+
+            .admin-btn {
+                padding: 3px 8px;
+                font-size: 0.7rem;
+            }
+
+            .modal-card {
+                padding: 18px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="version-badge">v1.0.0</div>
+    <div class="top-nav">
+        <button id="adminToggleBtn" class="admin-btn" onclick="handleAdminToggle()">
+            <span class="admin-status-indicator"></span>
+            <i class="fa-solid fa-lock" id="adminLockIcon"></i>
+            <span id="adminBtnText">Admin Access</span>
+        </button>
+        <div class="version-badge">v1.0.0</div>
+    </div>
+
+    <!-- Admin active banner -->
+    <div class="admin-alert-banner" id="adminBanner">
+        <div class="left-info">
+            <i class="fa-solid fa-shield-check fa-lg"></i>
+            <span><strong>Admin Mode Active:</strong> Direct access to response sheets & analytics is enabled on all forms below.</span>
+        </div>
+        <button class="btn-secondary" style="padding: 4px 10px; font-size: 0.75rem;" onclick="logoutAdmin()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Lock Admin
+        </button>
+    </div>
 
     <main class="main-content">
 
@@ -301,83 +674,74 @@
                 <a href="https://docs.google.com/forms/d/1SFygPB40HN2FEpaCnq377iYtZoyRyb80xopRwzjhiLA/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-chart-line card-icon"></i>
                         <span class="card-tag">Daily</span>
                     </div>
                     <div class="form-title">Daily FOC Production Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/17pF7lPWU0JpNcJPzXJA6tDXxgqqvgJR5t4nBmupYuqw/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-dumpster card-icon"></i>
                         <span class="card-tag">Inward</span>
                     </div>
                     <div class="form-title">Inward Waste Characterization</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1RfqT1yjOqqmQta15Yd9KHkUJNBKiCwIEvZc2dnVtAOU/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-gears card-icon"></i>
                         <span class="card-tag">Plant</span>
                     </div>
                     <div class="form-title">100mm Plant Production Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1LxKk6OjOFeWyiXD73dRfWcN7N4jTvGo2b4L_8JclQz4/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-seedling card-icon"></i>
                         <span class="card-tag">Compost</span>
                     </div>
                     <div class="form-title">Compost Plant Production Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1eoPGNPUSULvlRNMR0dFDsdZgBy-WO3cEjgZgk3K0zRA/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-box-archive card-icon"></i>
                         <span class="card-tag">Baling</span>
                     </div>
                     <div class="form-title">Daily Baling Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1LufnLaq1xrn9DjLGGaWFJP7ZJHu5-1_dl4iHwTnBDpw/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-bottle-water card-icon"></i>
                         <span class="card-tag">PET</span>
                     </div>
                     <div class="form-title">PET Sorting Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1aLO6wf1ct6aogjITI8a9wQt94PeSoz_CYdVb6fL64BU/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-bolt card-icon"></i>
                         <span class="card-tag">Realtime</span>
                     </div>
                     <div class="form-title">Realtime Sorting Material Form</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/15tdqnlMRtxsRHpRxFqt5Do2ArA289HkH5SFfQY7uv4w/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-users-viewfinder card-icon"></i>
                         <span class="card-tag">Sorting</span>
                     </div>
                     <div class="form-title">Daily Sorting Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1E5QTBdxG8811I8J6Luy0q01Q8NbDQxka5sUdHYnOaZU/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-bag-shopping card-icon"></i>
                         <span class="card-tag">FG Goods</span>
                     </div>
                     <div class="form-title">Daily FG Bags Form 2025-26</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
             </div>
         </section>
@@ -392,56 +756,50 @@
                 <a href="https://docs.google.com/forms/d/1AR24IK6m5AM9tC0gE8YUZiHE8eQO3scHs_sCe5a1spU/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-weight-scale card-icon"></i>
                         <span class="card-tag">Weighbridge</span>
                     </div>
                     <div class="form-title">Daily Weighbridge Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1uSnEzLW7CZ4ym7dRW8N6Y7KrIhZCZxOfha5a9h9hXSk/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-truck-fast card-icon"></i>
                         <span class="card-tag">Dispatch</span>
                     </div>
                     <div class="form-title">Mathura MRF Material Dispatch Form</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1vtzjm_FiMpsHAN2L2S5ax5ss5NapojzoQxH7IqmS_KQ/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-coins card-icon"></i>
                         <span class="card-tag">Sales</span>
                     </div>
                     <div class="form-title">Compost Plant Sales</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1kc8c52yQEsbBYDf6k7QUUlVGikCvB-Cdb_sbNxFnSQQ/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-trash-can card-icon"></i>
                         <span class="card-tag">Disposal</span>
                     </div>
                     <div class="form-title">Rejection Disposal Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1NeMpDQcjWM8aT39haWEnvceCoCGpeZEHg2opfmXrbfM/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-triangle-exclamation card-icon"></i>
                         <span class="card-tag">Breakdown</span>
                     </div>
                     <div class="form-title">Rental Vehicle Breakdown Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1L_9RRYUoBp44foRDvJigxu7thQ5We30QANVUAbNkuEc/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-clipboard-list card-icon"></i>
                         <span class="card-tag">Tracker</span>
                     </div>
                     <div class="form-title">Weighment Tracker</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
             </div>
         </section>
@@ -456,74 +814,66 @@
                 <a href="https://docs.google.com/forms/d/1nkCbWuHwcD00F4_GuZYoHFWFWvgJSGUi5u45LmtIbK0/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-oil-can card-icon"></i>
                         <span class="card-tag">MRF Diesel</span>
                     </div>
                     <div class="form-title">MRF Diesel Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1TjmK3Ba5ipcyNPoZcGNDw8UZD7jEgKVBMRsfHPtcJRY/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-gas-pump card-icon"></i>
                         <span class="card-tag">Common Diesel</span>
                     </div>
                     <div class="form-title">Common Diesel Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/16QU2JiOUPtXXTEg8vHHC55_-gjZuxavoqoujVT1ZgI8/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-truck-monster card-icon"></i>
                         <span class="card-tag">100mm Diesel</span>
                     </div>
                     <div class="form-title">100mm Plant Diesel Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1lxbTO9SFtGv2M1jOd_VG9fqpECRRlEQ7_9vPH7r8N4k/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-tractor card-icon"></i>
                         <span class="card-tag">Compost Diesel</span>
                     </div>
                     <div class="form-title">Compost Plant Diesel Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1hYGVo3BhBUIDF4t7djcGfnB1RhahLiNVmgSkT1Oq2RY/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-mountain card-icon"></i>
                         <span class="card-tag">Dumpsite Diesel</span>
                     </div>
                     <div class="form-title">Dumpsite Diesel Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1PdlMUBY3p_uPjN40VdL7Tt2aa_CFimmpxRPMSbtOov4/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-cart-shopping card-icon"></i>
                         <span class="card-tag">Purchase</span>
                     </div>
                     <div class="form-title">Material Purchase Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1nexcCM7QjsFFAHcmbz4PC8cWqxLbK5Uj26VO2lWxFLI/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-shield-halved card-icon"></i>
                         <span class="card-tag">EHS Inward</span>
                     </div>
                     <div class="form-title">EHS Stock Inwards Record</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
                 <a href="https://docs.google.com/forms/d/1wKJU9k5dQTJIdTxFiPh0mopssvHm7btruQGoRAYdVv0/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-box-open card-icon"></i>
                         <span class="card-tag">EHS Issue</span>
                     </div>
                     <div class="form-title">EHS Stock Issuance Form</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
             </div>
         </section>
@@ -538,18 +888,171 @@
                 <a href="https://docs.google.com/forms/d/15uqeQQk1VgSORx9sZxSuEO-SqSKX3gxYv4030shzy6s/viewform" target="_blank"
                     class="form-card">
                     <div class="card-top">
-                        <i class="fa-solid fa-screwdriver-wrench card-icon"></i>
                         <span class="card-tag">Inspection</span>
                     </div>
                     <div class="form-title">Machine Observation Form</div>
-                    <div class="card-footer">Submit Entry <i class="fa-solid fa-arrow-right"></i></div>
+                    <div class="card-footer"><span class="submit-label">Submit Entry <i class="fa-solid fa-arrow-right"></i></span></div>
                 </a>
             </div>
         </section>
 
     </main>
 
+    <!-- Admin Authentication Modal -->
+    <div class="modal-overlay" id="adminModal" onclick="handleBackdropClick(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fa-solid fa-user-shield" style="color: var(--primary-color);"></i>
+                    <span>Admin Authentication</span>
+                </div>
+                <button class="modal-close-btn" onclick="closeAdminModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please enter the administrator password to access form response sheets and live records.</p>
+                <div class="password-field">
+                    <input type="password" id="adminPasswordInput" placeholder="Enter Admin Password" onkeydown="handlePasswordKey(event)">
+                    <button type="button" class="toggle-pwd-btn" onclick="togglePasswordVisibility()" title="Show/Hide Password">
+                        <i class="fa-solid fa-eye" id="togglePwdIcon"></i>
+                    </button>
+                </div>
+                <div class="error-message" id="adminErrorMsg">
+                    <i class="fa-solid fa-circle-exclamation"></i> Incorrect password. Please try again.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-secondary" onclick="closeAdminModal()">Cancel</button>
+                <button type="button" class="btn-primary" onclick="verifyAdminPassword()">
+                    <i class="fa-solid fa-key"></i> Unlock
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
+        // Password configuration
+        const ADMIN_PASS = "Recity_0987";
+        let isAdminLoggedIn = false;
+
+        // Auto-enhance cards with Admin Response buttons
+        document.addEventListener("DOMContentLoaded", () => {
+            setupAdminLinks();
+            if (sessionStorage.getItem("recity_admin_session") === "true") {
+                activateAdminMode();
+            }
+        });
+
+        function setupAdminLinks() {
+            const cards = document.querySelectorAll('.form-card');
+            cards.forEach(card => {
+                const href = card.getAttribute('href');
+                if (href && href.includes('/viewform')) {
+                    const responseHref = href.replace('/viewform', '/edit#responses');
+                    const footer = card.querySelector('.card-footer');
+                    if (footer) {
+                        const respBtn = document.createElement('a');
+                        respBtn.className = 'admin-response-btn';
+                        respBtn.href = responseHref;
+                        respBtn.target = '_blank';
+                        respBtn.innerHTML = '<i class="fa-solid fa-table-list"></i> Responses';
+                        respBtn.title = 'Open Responses & Edit Dashboard';
+                        
+                        // Prevent triggering card click
+                        respBtn.addEventListener('click', (e) => {
+                            e.stopPropagation();
+                        });
+
+                        footer.appendChild(respBtn);
+                    }
+                }
+            });
+        }
+
+        function handleAdminToggle() {
+            if (isAdminLoggedIn) {
+                logoutAdmin();
+            } else {
+                openAdminModal();
+            }
+        }
+
+        function openAdminModal() {
+            const modal = document.getElementById('adminModal');
+            const input = document.getElementById('adminPasswordInput');
+            const error = document.getElementById('adminErrorMsg');
+            error.style.display = 'none';
+            input.value = '';
+            modal.classList.add('show');
+            setTimeout(() => input.focus(), 50);
+        }
+
+        function closeAdminModal() {
+            const modal = document.getElementById('adminModal');
+            modal.classList.remove('show');
+        }
+
+        function handleBackdropClick(event) {
+            if (event.target.id === 'adminModal') {
+                closeAdminModal();
+            }
+        }
+
+        function handlePasswordKey(e) {
+            if (e.key === 'Enter') {
+                verifyAdminPassword();
+            }
+        }
+
+        function togglePasswordVisibility() {
+            const input = document.getElementById('adminPasswordInput');
+            const icon = document.getElementById('togglePwdIcon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function verifyAdminPassword() {
+            const input = document.getElementById('adminPasswordInput');
+            const error = document.getElementById('adminErrorMsg');
+            
+            if (input.value === ADMIN_PASS) {
+                sessionStorage.setItem("recity_admin_session", "true");
+                activateAdminMode();
+                closeAdminModal();
+            } else {
+                error.style.display = 'block';
+                input.focus();
+                input.select();
+            }
+        }
+
+        function activateAdminMode() {
+            isAdminLoggedIn = true;
+            document.body.classList.add('admin-active');
+            document.getElementById('adminBtnText').innerText = 'Lock Admin';
+            const icon = document.getElementById('adminLockIcon');
+            icon.classList.remove('fa-lock');
+            icon.classList.add('fa-lock-open');
+        }
+
+        function logoutAdmin() {
+            isAdminLoggedIn = false;
+            sessionStorage.removeItem("recity_admin_session");
+            document.body.classList.remove('admin-active');
+            document.getElementById('adminBtnText').innerText = 'Admin Access';
+            const icon = document.getElementById('adminLockIcon');
+            icon.classList.remove('fa-lock-open');
+            icon.classList.add('fa-lock');
+        }
+
         // Live Search Filter Functionality
         function filterForms() {
             const query = document.getElementById('searchInput').value.toLowerCase();
